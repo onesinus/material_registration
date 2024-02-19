@@ -6,5 +6,7 @@
         <!-- Sub-menu under Materials -->
         <menuitem id="menu_material_registration" parent="menu_material" name="Material Registration" sequence="1" action="action_material_registration"/>
 
+        <menuitem id="menu_users_with_tokens" parent="menu_material" name="Users with Auth Tokens" sequence="2" action="action_users_with_tokens"/>
+
     </data>
 </odoo>

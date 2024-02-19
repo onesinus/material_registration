@@ -1,0 +1,29 @@
+<odoo>
+    <data noupdate="1">
+        <!-- Sample Materials -->
+        <record id="material_1" model="material_registration.material">
+            <field name="material_code">M001</field>
+            <field name="material_name">Fabric Sample</field>
+            <field name="material_type">fabric</field>
+            <field name="material_buy_price">120.0</field>
+            <field name="related_supplier">1</field>
+        </record>
+
+        <record id="material_2" model="material_registration.material">
+            <field name="material_code">M002</field>
+            <field name="material_name">Jeans Sample</field>
+            <field name="material_type">jeans</field>
+            <field name="material_buy_price">150.0</field>
+            <field name="related_supplier">1</field>
+        </record>
+
+        <record id="material_3" model="material_registration.material">
+            <field name="material_code">M003</field>
+            <field name="material_name">Cotton Sample</field>
+            <field name="material_type">cotton</field>
+            <field name="material_buy_price">100</field>
+            <field name="related_supplier">1</field>
+        </record>
+
+    </data>
+</odoo>

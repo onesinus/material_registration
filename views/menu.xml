@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <!-- Top-level Menu -->
+        <menuitem id="menu_material" name="Materials" sequence="0"/>
+
+        <!-- Sub-menu under Materials -->
+        <menuitem id="menu_material_registration" parent="menu_material" name="Material Registration" sequence="1" action="action_material_registration"/>
+
+    </data>
+</odoo>

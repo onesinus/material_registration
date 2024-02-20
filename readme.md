@@ -1,3 +1,6 @@
+# Notes
+Well tested on odoo 17, assume this module will work also for odoo 16, 15 and 14 even it's not yet tested
+
 # Endpoints
 [GET] http://localhost:8069/material_registration/materials
 

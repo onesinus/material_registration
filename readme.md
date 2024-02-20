@@ -1,3 +1,18 @@
+# Entity-Relationship Diagram (ERD)
+
+## Material Entity
++------------------+          +------------------+
+|     Material     |          |     Supplier     |
++------------------+          +------------------+
+| id               |<---------| id               |
+| material_code    |          | name             |
+| material_name    |          | supplier         |
+| material_type    |          +------------------+
+| material_buy_price|
+| related_supplier |-------------------------->|
++------------------+
+
+
 # Notes
 Well tested on odoo 17, assume this module will work also for odoo 16, 15 and 14 even it's not yet tested
 

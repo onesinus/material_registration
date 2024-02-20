@@ -1,17 +1,17 @@
 import json
 
 
-from datetime import datetime
 from odoo import http
 from odoo.http import request, Response
 
 from ..utils.auth_utils import authenticate
+from ..serializers.date_serializer import format_datetime
 
 
 class MaterialController(http.Controller):
     @http.route('/material_registration/materials', auth='public', methods=['GET'])
-    # @authenticate
-    def get_materials(self, material_type=None):
+    @authenticate
+    def get_materials(self, material_type=None, **kwargs):
         domain = [('material_type', '=', material_type)] if material_type else []
         materials = request.env['material_registration.material'].search(domain)
         
@@ -24,27 +24,22 @@ class MaterialController(http.Controller):
                 'material_type': material.material_type,
                 'material_buy_price': material.material_buy_price,
                 'related_supplier': material.related_supplier.name,
-                # Add other fields as needed
             })
 
         return Response(json.dumps(material_data), content_type='application/json')
 
     @http.route('/material_registration/material/<int:material_id>', auth='public', methods=['GET'])
-    def get_material(self, material_id):
+    @authenticate
+    def get_material(self, material_id, **kwargs):
         material = request.env['material_registration.material'].browse(material_id)
-        
-        # Serialize datetime objects to strings using a custom function
-        def custom_serializer(obj):
-            if isinstance(obj, datetime):
-                return obj.strftime('%Y-%m-%d %H:%M:%S')
-            raise TypeError(f'Type {type(obj)} not serializable')
 
-        # Use custom_serializer for serialization
-        material_data = json.dumps(material.read(), default=custom_serializer)
+        # Use format_datetime for serialization
+        material_data = json.dumps(material.read(), default=format_datetime)
         
         return Response(material_data, content_type='application/json')
 
     @http.route('/material_registration/material', auth='public', methods=['POST'], csrf=False)
+    @authenticate    
     def create_material(self, **kwargs):
         try:
             request_data = json.loads(request.httprequest.data.decode('utf-8'))
@@ -65,8 +60,9 @@ class MaterialController(http.Controller):
                 'material_buy_price': material_buy_price,
                 'related_supplier': int(supplier_id),
             })
-
-            return Response(json.dumps(material.read()), content_type='application/json')
+    
+            material_data = json.dumps(material.read(), default=format_datetime)
+            return Response(material_data, content_type='application/json')
 
         except Exception as e:
             return Response(f"There is an error occured: {str(e)}", status=400)

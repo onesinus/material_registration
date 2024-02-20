@@ -10,14 +10,17 @@ def authenticate(func):
             token = request.httprequest.headers.get('Authorization')
             user = authenticate_user(token)
 
+            # Set the environment to the user's context
+            request.env = request.env(user=user)
+
             # Add the authenticated user to the kwargs
             kwargs['user'] = user
 
             # Call the original function with the authenticated user
             return func(*args, **kwargs)
 
-        except AccessError:
-            return Response("Unauthorized: Invalid or missing authentication token", status=401)
+        except AccessError as ae:
+            return Response(f"Unauthorized: Invalid or missing authentication token {(str(ae))}", status=401)
         except Exception as e:
             # Handle other exceptions and return a bad request response
             return Response(f"Bad Request: {str(e)}", status=400)

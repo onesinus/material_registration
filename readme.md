@@ -1,8 +1,12 @@
 # Endpoints
 [GET] http://localhost:8069/material_registration/materials
+
 [GET] http://localhost:8069/material_registration/material/1
+
 [POST] http://localhost:8069/material_registration/material
+
 [PUT] http://localhost:8069/material_registration/material/2
+
 [DEL] http://localhost:8069/material_registration/material/1
 
 

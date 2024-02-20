@@ -67,12 +67,29 @@ class MaterialController(http.Controller):
         except Exception as e:
             return Response(f"There is an error occured: {str(e)}", status=400)
 
-    @http.route('/material_registration/material/<int:material_id>', auth='public', methods=['PUT'])
+    @http.route('/material_registration/material/<int:material_id>', auth='public', methods=['PUT'], csrf=False)
     @authenticate
     def update_material(self, material_id, **kwargs):
         material = request.env['material_registration.material'].browse(material_id)
-        material.write(kwargs)
-        return Response(json.dumps(material.read()), content_type='application/json')
+
+        updated_data = json.loads(request.httprequest.data.decode('utf-8'))
+
+        material_code = updated_data.get('material_code')
+        material_name = updated_data.get('material_name')
+        material_type = updated_data.get('material_type')
+        material_buy_price = updated_data.get('material_buy_price')
+        supplier_id = updated_data.get('supplier_id')
+
+        material.write({
+            'material_code': material_code,
+            'material_name': material_name,
+            'material_type': material_type,
+            'material_buy_price': material_buy_price,
+            'related_supplier': int(supplier_id),
+        })
+
+        updated_material_data = json.dumps(material.read(), default=format_datetime)
+        return Response(updated_material_data, content_type='application/json')
 
     @http.route('/material_registration/material/<int:material_id>', auth='public', methods=['DELETE'], csrf=False)
     @authenticate

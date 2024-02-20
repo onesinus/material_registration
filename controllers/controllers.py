@@ -68,13 +68,17 @@ class MaterialController(http.Controller):
             return Response(f"There is an error occured: {str(e)}", status=400)
 
     @http.route('/material_registration/material/<int:material_id>', auth='public', methods=['PUT'])
+    @authenticate
     def update_material(self, material_id, **kwargs):
         material = request.env['material_registration.material'].browse(material_id)
         material.write(kwargs)
         return Response(json.dumps(material.read()), content_type='application/json')
 
-    @http.route('/material_registration/material/<int:material_id>', auth='public', methods=['DELETE'])
-    def delete_material(self, material_id):
+    @http.route('/material_registration/material/<int:material_id>', auth='public', methods=['DELETE'], csrf=False)
+    @authenticate
+    def delete_material(self, material_id, **kwargs):
         material = request.env['material_registration.material'].browse(material_id)
         material.unlink()
-        return {'status': 'success'}
+
+        response_data = {'id': material_id, 'status': 'success', 'message': f"Material with id #{material_id} has been deleted."}
+        return Response(json.dumps(response_data), content_type='application/json')

@@ -7,7 +7,7 @@
 
 [PUT] http://localhost:8069/material_registration/material/2
 
-[DEL] http://localhost:8069/material_registration/material/1
+	[DEL] http://localhost:8069/material_registration/material/1
 
 
 # Request Examples
@@ -61,3 +61,7 @@ curl --location --request DELETE 'http://localhost:8069/material_registration/ma
 --header 'Authorization: 5c5a50d2-a7b6-4a95-8492-8b06139e3e7f' \
 --header 'Cookie: session_id=a2bf0d2a943a853e7ab40d9b6d07e831b9e7b7cd'
 ```
+
+
+# Running test
+"E:\_Installed Apps\python\python.exe" "E:\_Installed Apps\server\odoo-bin" -d admin -i material_registration --test-enable

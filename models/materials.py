@@ -1,4 +1,6 @@
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
+
 
 class Material(models.Model):
     _name = 'material_registration.material'
@@ -18,4 +20,4 @@ class Material(models.Model):
     def _check_material_buy_price(self):
         for record in self:
             if record.material_buy_price < 100:
-                raise ValueError("Material Buy Price should not be less than 100.")
+                raise ValidationError("Material Buy Price should not be less than 100.")
